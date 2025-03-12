@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { Countries, Country } from "../inner/types";
+import { Countries } from "../inner/types";
 import { DATA } from "../inner/constants";
 
 const country1 = DATA.countries[30];
@@ -53,29 +53,32 @@ function App() {
         <section className="countries-wrapper">
           {resultCountries.map((c, i) => (
             <div key={i} className="country-wrapper">
-              <h2>
-                <span style={{ fontWeight: "normal" }}>✉︎</span>
-                {c.name ?? ""}
+              <h2 className="country-title">
+                {/* <span style={{ fontWeight: "normal", fontSize: "30px" }}>
+                  ✉︎
+                </span> */}
+                <span>{c.emoji}</span>
+                <span>
+                  {c.name} ({c.code})
+                </span>
               </h2>
-              <div>{c.code ?? ""}</div>
-              {c.capital && <div>{c.capital ?? ""}</div>}
-              <div>{c.continent.name}</div>
-              {c.currency && <div>{c.currency ?? ""}</div>}
-              <div>{c.emoji}</div>
+              {/* <div></div> */}
+              {c.capital && <div>𖥔 {c.capital}</div>}
+              <div>⌖ {c.continent.name}</div>
+              {/* {c.currency && <div>{c.currency}</div>} */}
               <div>
-                (
+                🅰︎{" "}
                 {c.languages.map((c, i) => (
                   <span
                     key={i}
-                    style={{ fontWeight: c.native ? "bold" : "normal" }}
+                    // style={{ fontWeight: c.native ? "bold" : "normal" }}
                   >
                     {c.name}
                   </span>
                 ))}
-                )
               </div>
-              <div>{c.phone}</div>
-              <div>{c.phone}</div>
+              <div>✆ {c.phone}</div>
+              {/* <div>{c.phone}</div> */}
             </div>
           ))}
         </section>
