@@ -95,6 +95,10 @@ button {
   }
 }
 
+.continent-title {
+  padding: 40px 0px;
+}
+
 .countries-wrapper {
   width: 100%;
   display: flex;
@@ -130,4 +134,10 @@ button {
 
 .country-title > span {
   background-color: transparent;
+}
+
+.wrapper-languages {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
 }

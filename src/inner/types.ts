@@ -1,25 +1,34 @@
+export type Subdivisions = { code: string; name: string; __typename: string };
+
 export type Language = {
   name: string;
   native: string;
+  code: string;
   __typename: "Language";
 };
-export type Languages = Language[];
+export type Languages = Language[] | [];
 
-export type Continent = {
+export type ContinentData = {
   name: string;
-  __typename: "Continent";
+  code: string;
+  countries: CountryData[];
 };
 
-export type Country = {
+export type CountryData = {
   name: string;
   code: string;
   emoji: string;
+  emojiU: string;
   currency: string | null;
   phone: string;
   languages: Languages;
   capital: string | null;
-  continent: Continent;
+  subdivisions: Subdivisions[];
+  continent: {
+    name: string;
+    __typename: "Continent";
+  };
   __typename: "Country";
 };
 
-export type Countries = Country[];
+export type Countries = CountryData[];

@@ -1,10 +1,31 @@
-import { StrictMode } from "react";
+import {
+  ApolloProvider,
+  ApolloClient,
+  createHttpLink,
+  InMemoryCache,
+} from "@apollo/client";
+import App from "./outer/components/App";
+// import ReactDOM from "react-dom";
 import { createRoot } from "react-dom/client";
+
 import "./index.css";
-import App from "./outter/App.tsx";
+
+const httpLink = createHttpLink({
+  uri: "https://countries.trevorblades.com/",
+});
+const client = new ApolloClient({
+  link: httpLink,
+  cache: new InMemoryCache(),
+});
+// ReactDOM.render(
+//   document.getElementById("root")
+// );
 
 createRoot(document.getElementById("root")!).render(
-  <StrictMode>
+  <ApolloProvider client={client}>
     <App />
-  </StrictMode>
+  </ApolloProvider>
+  // <StrictMode>
+  //   <App />
+  // </StrictMode>
 );
