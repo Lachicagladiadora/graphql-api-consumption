@@ -10,12 +10,16 @@ export const Continents = ({ allContinents }: ContinentsProps) => {
       {Boolean(allContinents.length) &&
         allContinents.map((c, i) => (
           <div key={i}>
-            <h2 className="continent-title">{c.name}</h2>
-            <div key={c.code} className="countries-wrapper">
-              {c.countries.map((cur, idx) => (
-                <Country key={idx} currentCountry={cur} />
-              ))}
-            </div>
+            {Boolean(c.countries.length) && (
+              <>
+                <h2 className="continent-title">{c.name}</h2>
+                <div key={c.code} className="countries-wrapper">
+                  {c.countries.map((cur, idx) => (
+                    <Country key={idx} currentCountry={cur} />
+                  ))}
+                </div>
+              </>
+            )}
           </div>
         ))}
     </div>

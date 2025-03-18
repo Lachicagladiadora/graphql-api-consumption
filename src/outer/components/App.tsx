@@ -85,19 +85,17 @@ function App() {
       if (!existCountry.length) return false;
       return true;
     });
-    console.log({ filterByContinent });
     if (!value) setResultByContinent(data.continents);
     if (!filterByContinent) return;
     const newFilteredByContinent = data.continents.map((c) => {
       const filteredCountries = c.countries.filter((cur) =>
         cur.name.toLocaleLowerCase().includes(value.toLocaleLowerCase())
       );
-      if (!filteredCountries.length) return false;
-      return true;
+      if (!filteredCountries.length)
+        return { name: c.name, code: c.code, countries: [] };
+      return { name: c.name, code: c.code, countries: filteredCountries };
     });
-    // #region todo: filter
-    console.log({ newFilteredByContinent });
-    setResultByContinent(newFilteredByContinent.continents);
+    setResultByContinent(newFilteredByContinent);
   }, [value, filterBy, data]);
 
   useEffect(() => {
