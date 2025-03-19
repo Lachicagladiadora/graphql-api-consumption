@@ -16,7 +16,7 @@ body {
 .root {
   height: 100dvh;
   width: 100dvw;
-  max-width: 850px;
+  max-width: 950px;
   padding: 10px;
   display: flex;
   flex-direction: column;
@@ -82,6 +82,7 @@ button {
   border-radius: 30px;
   border: solid 2px #898989;
   color: #898989;
+  cursor: pointer;
 
   &:hover {
     background: #00796b;
@@ -97,6 +98,9 @@ button {
 
 .results-wrapper {
   width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
 .second-title {
@@ -121,14 +125,14 @@ button {
 .countries-wrapper {
   width: 100%;
   display: flex;
+  justify-content: center;
   flex-wrap: wrap;
-  gap: 10px;
+  gap: 20px;
 }
 
 .country-wrapper {
   min-width: 310px;
   max-width: 450px;
-  width: 380px;
   padding: 20px;
   border-radius: 10px;
   border: solid 1px #898989;
@@ -136,7 +140,7 @@ button {
   display: flex;
   flex-direction: column;
   overflow: hidden;
-  margin-bottom: 10px;
+  cursor: pointer;
 }
 
 .country-wrapper > div {
@@ -161,7 +165,7 @@ button {
 
 .wrapper-languages {
   min-height: 20px;
-  max-height: 37px;
+  max-height: 56px;
   display: flex;
   gap: 8px;
   flex-direction: row;
