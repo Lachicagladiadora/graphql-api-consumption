@@ -1,4 +1,4 @@
-export type Subdivisions = { code: string; name: string; __typename: string };
+export type Subdivision = { code: string; name: string; __typename: string };
 
 export type LanguageSchema = {
   name: string;
@@ -21,7 +21,7 @@ export type CountrySchema = {
   phone: string;
   languages: LanguageSchema[];
   capital: string | null;
-  subdivisions: Subdivisions[];
+  subdivisions: Subdivision[];
   continent: {
     name: string;
     code: string;

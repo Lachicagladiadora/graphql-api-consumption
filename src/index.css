@@ -160,23 +160,25 @@ button {
 }
 
 .wrapper-languages {
+  min-height: 20px;
+  max-height: 37px;
   display: flex;
   gap: 8px;
   flex-direction: row;
   align-items: center;
+  overflow: hidden;
 }
 
 .languages {
-  height: 35.56px;
   background-color: transparent;
   display: flex;
-  flex-direction: column;
-  overflow: hidden;
+  gap: 8px;
 }
 
 .language {
   background-color: transparent;
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
   justify-content: center;
+  gap: 8px;
 }

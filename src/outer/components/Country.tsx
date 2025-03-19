@@ -12,7 +12,10 @@ export const Country = ({ currentCountry }: CountryProps) => {
         </span>
       </h2>
       {currentCountry.capital && <div>𖥔 {currentCountry.capital}</div>}
-      <div>⌖ {currentCountry.continent.name}</div>
+      <div>
+        ⌖ {currentCountry.continent.name} ({currentCountry.continent.code})
+      </div>
+      <div>✆ {currentCountry.phone}</div>
       <div className="wrapper-languages">
         🅰︎{" "}
         <div className="languages">
@@ -23,7 +26,7 @@ export const Country = ({ currentCountry }: CountryProps) => {
           ))}
         </div>
       </div>
-      <div>✆ {currentCountry.phone}</div>
+      <div>Subdivisions: {currentCountry.subdivisions.length}</div>
     </div>
   );
 };
