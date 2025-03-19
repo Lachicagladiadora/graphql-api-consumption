@@ -1,6 +1,6 @@
-import { CountryData } from "../../inner/types";
+import { CountrySchema } from "../../inner/types";
 
-type CountryProps = { currentCountry: CountryData };
+type CountryProps = { currentCountry: CountrySchema };
 
 export const Country = ({ currentCountry }: CountryProps) => {
   return (
@@ -15,9 +15,13 @@ export const Country = ({ currentCountry }: CountryProps) => {
       <div>⌖ {currentCountry.continent.name}</div>
       <div className="wrapper-languages">
         🅰︎{" "}
-        {currentCountry.languages.map((c, i) => (
-          <span key={i}>{c.name}</span>
-        ))}
+        <div className="languages">
+          {currentCountry.languages.map((c, i) => (
+            <span className="language" key={i}>
+              {c.name} ({c.native})
+            </span>
+          ))}
+        </div>
       </div>
       <div>✆ {currentCountry.phone}</div>
     </div>

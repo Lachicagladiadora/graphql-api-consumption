@@ -1,7 +1,5 @@
 import { useEffect, useState } from "react";
-import { Countries } from "../../inner/types";
-import { DATA } from "../../inner/constants";
-import { Country } from "./Country";
+import { CountrySchema } from "../../inner/types";
 import { Continents } from "./Continents";
 import {
   TypedDocumentNode,
@@ -10,98 +8,90 @@ import {
   useQuery,
 } from "@apollo/client";
 import { DocumentNode } from "graphql";
-import { ContinentData } from "../../inner/types";
+import { Languages } from "./Languages";
 
 const FEED_QUERY:
   | DocumentNode
-  | TypedDocumentNode<
-      { continents: ContinentData[] },
-      OperationVariables
-    > = gql`
+  | TypedDocumentNode<{ countries: CountrySchema[] }, OperationVariables> = gql`
   {
-    continents {
+    countries {
       name
       code
-      countries {
+      emoji
+      currency
+      phone
+      languages {
         name
+        native
         code
-        emoji
-        emojiU
-        currency
-        phone
-        languages {
-          name
-          native
-          code
-        }
-        capital
-        subdivisions {
-          code
-          name
-          __typename
-        }
-        continent {
-          name
-          __typename
-        }
+      }
+      capital
+      subdivisions {
+        code
+        name
         __typename
       }
+      continent {
+        name
+        code
+        __typename
+      }
+      __typename
     }
   }
 `;
 
 function App() {
-  const { data } = useQuery(FEED_QUERY);
-  console.log({ data });
-  const [resultCountries, setResultCountries] = useState<Countries>([]);
-  const [resultByContinent, setResultByContinent] = useState<ContinentData[]>(
-    []
-  );
+  const { data: countriesData } = useQuery(FEED_QUERY);
+  const [countriesByContinent, setCountriesByContinent] = useState<
+    CountrySchema[]
+  >([]);
+  const [countriesByLanguages, setCountriesByLanguages] = useState<
+    CountrySchema[]
+  >([]);
   const [value, setValue] = useState("");
   const [filterBy, setFilterBy] = useState<"continent" | "language">(
     "continent"
   );
+  const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
-    if (!data) return;
-    if (filterBy === "language") {
-      const filterByLanguage = DATA.countries.filter((c) => {
-        if (!c.languages.length) return false;
-        return c.languages[0].name
-          .toLocaleLowerCase()
-          .includes(value.toLocaleLowerCase())
-          ? true
-          : false;
-      });
-      setResultCountries(filterByLanguage);
+    if (!countriesData) return;
+    if (!filterBy) return;
+
+    if (!value) {
+      setCountriesByLanguages(countriesData.countries);
+      setCountriesByContinent(countriesData.countries);
+      setIsLoading(false);
       return;
     }
-    const filterByContinent = data.continents.some((c) => {
-      const existCountry = c.countries.filter((cur) =>
+
+    if (filterBy === "language" && value) {
+      setIsLoading(true);
+      const filterByLanguage = countriesData.countries.filter((c) =>
+        c.name.toLocaleLowerCase().includes(value.toLocaleLowerCase())
+      );
+      setCountriesByLanguages(filterByLanguage);
+      setIsLoading(false);
+      return;
+    }
+
+    if (filterBy === "continent" && value) {
+      setIsLoading(true);
+      const filterByContinent = countriesData.countries.filter((c) =>
+        c.name.toLocaleLowerCase().includes(value.toLocaleLowerCase())
+      );
+
+      if (!filterByContinent) return;
+
+      const newFilteredByContinent = countriesData.countries.filter((cur) =>
         cur.name.toLocaleLowerCase().includes(value.toLocaleLowerCase())
       );
-      console.log({ existCountry }, { c });
-
-      if (!existCountry.length) return false;
-      return true;
-    });
-    if (!value) setResultByContinent(data.continents);
-    if (!filterByContinent) return;
-    const newFilteredByContinent = data.continents.map((c) => {
-      const filteredCountries = c.countries.filter((cur) =>
-        cur.name.toLocaleLowerCase().includes(value.toLocaleLowerCase())
-      );
-      if (!filteredCountries.length)
-        return { name: c.name, code: c.code, countries: [] };
-      return { name: c.name, code: c.code, countries: filteredCountries };
-    });
-    setResultByContinent(newFilteredByContinent);
-  }, [value, filterBy, data]);
-
-  useEffect(() => {
-    if (!data) return;
-    setResultByContinent(data.continents);
-  }, [data]);
+      setCountriesByContinent(newFilteredByContinent);
+      setIsLoading(false);
+      return;
+    }
+  }, [value, filterBy, countriesData]);
 
   return (
     <>
@@ -122,7 +112,10 @@ function App() {
       <section className="buttons-wrapper">
         <h2>Group by:</h2>
         <button
-          onClick={() => setFilterBy("continent")}
+          onClick={() => {
+            setIsLoading(true);
+            setFilterBy("continent");
+          }}
           style={{
             background: filterBy === "continent" ? "#00796b" : "transparent",
             color: filterBy === "continent" ? "#fff" : "#898989",
@@ -131,7 +124,10 @@ function App() {
           Continent
         </button>
         <button
-          onClick={() => setFilterBy("language")}
+          onClick={() => {
+            setIsLoading(true);
+            setFilterBy("language");
+          }}
           style={{
             background: filterBy === "language" ? "#00796b" : "transparent",
             color: filterBy === "language" ? "#fff" : "#898989",
@@ -140,17 +136,16 @@ function App() {
           Language
         </button>
       </section>
-      {filterBy === "language" && (
-        <section className="countries-wrapper">
-          {resultCountries.map((c, i) => (
-            <Country key={i} currentCountry={c} />
-          ))}
-        </section>
-      )}
+      <section className="results-wrapper">
+        {isLoading && <div className="loading-wrapper">...Loading</div>}
+        {filterBy === "language" && !isLoading && (
+          <Languages countries={countriesByLanguages} />
+        )}
 
-      {filterBy === "continent" && (
-        <Continents allContinents={resultByContinent} />
-      )}
+        {filterBy === "continent" && !isLoading && (
+          <Continents countries={countriesByContinent} />
+        )}
+      </section>
     </>
   );
 }
