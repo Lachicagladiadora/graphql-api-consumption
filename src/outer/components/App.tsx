@@ -110,7 +110,6 @@ function App() {
         </div>
       </section>
       <section className="buttons-wrapper">
-        <h2>Group by:</h2>
         <button
           onClick={() => {
             setIsLoading(true);
@@ -119,6 +118,10 @@ function App() {
           style={{
             background: filterBy === "continent" ? "#00796b" : "transparent",
             color: filterBy === "continent" ? "#fff" : "#898989",
+            border:
+              filterBy === "continent"
+                ? "solid 2px #00796b"
+                : "solid 2px #898989",
           }}
         >
           Continent
@@ -131,6 +134,10 @@ function App() {
           style={{
             background: filterBy === "language" ? "#00796b" : "transparent",
             color: filterBy === "language" ? "#fff" : "#898989",
+            border:
+              filterBy === "language"
+                ? "solid 2px #00796b"
+                : "solid 2px #898989",
           }}
         >
           Language

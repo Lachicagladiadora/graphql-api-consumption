@@ -80,7 +80,6 @@ button {
   font-size: medium;
   padding: 6px 0px;
   border-radius: 30px;
-  border: solid 2px #898989;
   color: #898989;
   cursor: pointer;
 
@@ -125,14 +124,12 @@ button {
 .countries-wrapper {
   width: 100%;
   display: flex;
-  justify-content: center;
   flex-wrap: wrap;
   gap: 20px;
 }
 
 .country-wrapper {
   min-width: 310px;
-  max-width: 450px;
   padding: 20px;
   border-radius: 10px;
   border: solid 1px #898989;
@@ -163,26 +160,62 @@ button {
   background-color: transparent;
 }
 
+.feature {
+  font-weight: bold;
+}
+
 .wrapper-languages {
-  min-height: 20px;
-  max-height: 56px;
   display: flex;
-  gap: 8px;
   flex-direction: row;
-  align-items: center;
-  overflow: hidden;
+  flex-wrap: wrap;
 }
 
 .languages {
   background-color: transparent;
   display: flex;
   gap: 8px;
+  flex-wrap: wrap;
 }
 
 .language {
   background-color: transparent;
   display: flex;
   flex-direction: row;
-  justify-content: center;
+  align-items: center;
   gap: 8px;
+}
+
+@media (max-width: 469px) {
+  .country-wrapper {
+    width: 100%;
+  }
+  .buttons-wrapper {
+    gap: 20px;
+  }
+}
+@media (min-width: 470px) and (max-width: 670px) {
+  .country-wrapper {
+    width: 450px;
+  }
+  .buttons-wrapper {
+    justify-content: space-evenly;
+  }
+}
+
+@media (min-width: 671px) and (max-width: 940px) {
+  .country-wrapper {
+    width: 48%;
+  }
+  .buttons-wrapper {
+    justify-content: space-evenly;
+  }
+}
+
+@media (min-width: 941px) {
+  .country-wrapper {
+    width: 48.9%;
+  }
+  .buttons-wrapper {
+    justify-content: space-evenly;
+  }
 }

@@ -5,19 +5,26 @@ type CountryProps = { currentCountry: CountrySchema };
 export const Country = ({ currentCountry }: CountryProps) => {
   return (
     <div className="country-wrapper">
-      <h2 className="country-title">
+      <h3 className="country-title">
         <span>{currentCountry.emoji}</span>
         <span>
           {currentCountry.name} ({currentCountry.code})
         </span>
-      </h2>
-      {currentCountry.capital && <div>𖥔 {currentCountry.capital}</div>}
+      </h3>
+      {currentCountry.capital && (
+        <div>
+          <span className="feature">ꚰ Capital: </span> {currentCountry.capital}
+        </div>
+      )}
       <div>
-        ⌖ {currentCountry.continent.name} ({currentCountry.continent.code})
+        <span className="feature">𖡡 Continent: </span>
+        {currentCountry.continent.name} ({currentCountry.continent.code})
       </div>
-      <div>✆ {currentCountry.phone}</div>
+      <div>
+        <span className="feature">✆ Phone code:</span> + {currentCountry.phone}
+      </div>
       <div className="wrapper-languages">
-        🅰︎{" "}
+        <span className="feature">🄰 Language: </span>{" "}
         <div className="languages">
           {currentCountry.languages.map((c, i) => (
             <span className="language" key={i}>
@@ -26,7 +33,13 @@ export const Country = ({ currentCountry }: CountryProps) => {
           ))}
         </div>
       </div>
-      <div>Subdivisions: {currentCountry.subdivisions.length}</div>
+      <div>
+        <span className="feature">⛁ Currency: </span> {currentCountry.currency}
+      </div>
+      <div>
+        <span className="feature"> Subdivisions: </span>{" "}
+        {currentCountry.subdivisions.length}
+      </div>
     </div>
   );
 };
